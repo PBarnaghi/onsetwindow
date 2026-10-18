@@ -2,6 +2,8 @@
 
 **Transition Age and Windows of Opportunity under an Accumulating Burden Model of Alzheimer's Disease**
 
+![logo](logos/social-preview.png)
+
 Individual burden trajectories under the accumulating, whole-body burden model of Alzheimer's disease described in the Perspective *"Risk with a clock: reconsidering Alzheimer's disease as an accumulating, whole-body process"* (Barnaghi, Fogel, Biggart, Pownall, Ricotti and Voit).
 
 Given one person's sex, genotype, reserve, environment and exposure histories, `onsetwindow` computes the accumulated burden $S_i(t)$, the probability of clinical manifestation at each age, the transition age $T_i$, the constitutive share $\rho_i$, and the window of opportunity $W_i(k)$ for an intervention on each domain. Every input is read from a single `.param` file.
