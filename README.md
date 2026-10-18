@@ -1,4 +1,4 @@
-# Onsetwindow: Individual Risk Trajectories for Alzheimer’s Disease as an Accumulating, Whole-Body Process
+# onsetwindow: Individual Risk Trajectories for Alzheimer’s Disease as an Accumulating, Whole-Body Process
 
 <p align="center">
   <img src="logos/social-preview.png" alt="logo" width="75%">
