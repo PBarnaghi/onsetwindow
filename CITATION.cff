@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "onsetwindow: Transition Age and Windows of Opportunity under an Accumulating Burden Model of Alzheimer's Disease"
+version: 0.1.0
+date-released: 2026-10-16
+license: MIT
+authors:
+  - family-names: Barnaghi
+    given-names: Payam
+    affiliation: "Department of Brain Sciences, Imperial College London"
+# Add co-authors and the Perspective's DOI as preferred-citation once published.

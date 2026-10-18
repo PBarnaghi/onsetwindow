@@ -1,0 +1,152 @@
+# =============================================================================
+#  parameters_psen1_carrier.param  -  SYNTHETIC EXAMPLE (same person, PSEN1 carrier)
+#
+#  All values below are invented for illustration. They are not estimated
+#  from any cohort and describe no real person. Burden S(t) and threshold
+#  theta are in arbitrary units; only their relative size matters.
+#
+#  Format: INI-style. [section] headers, "key = value", comments after # or ;
+#  Lists are comma-separated. Gene/locus coefficients are "LOCUS:value" pairs.
+#  "inf" is accepted wherever a number is expected.
+# =============================================================================
+
+[simulation]
+age_start    = 0          # start of the exposure history (years); integrals run from here
+age_max      = 100        # last age simulated
+dt           = 0.1        # time step (years)
+report_ages  = 40, 50, 55, 60, 65, 70, 75, 80, 85, 90
+risk_horizon = 5          # also report P(manifest within h years | not manifest at age)
+
+# -----------------------------------------------------------------------------
+# The individual
+# -----------------------------------------------------------------------------
+[individual]
+id          = synthetic_F_002_PSEN1
+sex         = F           # F or M; selects w_k(s)
+environment = 0.6         # E_i, e.g. an area deprivation index scaled 0 (least) to 1 (most)
+
+[genotype]                # z_ig. Any locus name; referenced below by the same name
+APOE4 = 1                 # number of APOE e4 alleles (0, 1, 2)
+PSEN1 = 1                 # pathogenic PSEN1 variant carrier (0/1)
+
+[reserve]                 # r_i: reserve proxies (standardised: 0 = population mean, units = SD)
+education    = 0.5
+brain_volume = 0.0
+
+[reserve_genotype]        # z_i^(theta): variants acting on tolerance, not on burden
+RESERVE_SNP = 0
+
+# -----------------------------------------------------------------------------
+# Population-level coefficients
+# -----------------------------------------------------------------------------
+[beta]                    # beta_g: constitutive burden per year per unit genotype
+APOE4 = 0.02
+PSEN1 = 0.14
+
+[threshold]
+theta0 = 9.0              # threshold at mean reserve, no reserve variants
+a      = 1.2              # steepness of the sigmoid transition (small a = graded over years)
+
+[gamma]                   # gamma: shift in theta per SD of each reserve proxy
+education    = 0.8
+brain_volume = 0.5
+
+[eta]                     # eta: shift in theta per unit reserve-acting genotype
+RESERVE_SNP = 0.4
+
+# Latent capacity deficit m_i(u) >= 0 (e.g. lysosomal clearance), Eq. (3).
+[latent]
+ages          = 0,   40,  60,  80,  100
+values        = 0.2, 0.4, 0.8, 1.0, 1.0
+interpolation = linear    # linear | step
+kappa         = 0.03      # direct contribution: kappa * integral of m (0 = none)
+
+# -----------------------------------------------------------------------------
+# Risk domains, one section per domain: [domain:NAME]
+#
+#   weight_F, weight_M   w_k(s). Negative = protective.
+#   weight_genotype      w_k(s,z) = w_k(s) * (1 + sum c_g z_g)      e.g. APOE4:0.25
+#   tau                  memory-kernel persistence (years); inf = permanent
+#   lambda0              baseline propensity lambda_0k
+#   lambda_genotype      lambda_k(z) = max(0, sum l_g z_g)
+#   opportunity_ages / opportunity_values / opportunity_interpolation
+#                        base profile of the environmental opportunity e~_ik(u)
+#   env_baseline, env_coef
+#                        e~ is multiplied by (env_baseline + env_coef * E)
+#   onset_age, onset_genotype, onset_env
+#                        A_ik = onset_age + sum d_g z_g + onset_env * E
+#   nu                   loading on the latent deficit m_i(u), >= 0
+# -----------------------------------------------------------------------------
+
+[domain:metabolic]
+weight_F        = 0.08
+weight_M        = 0.06
+weight_genotype = APOE4:0.25
+tau             = 20
+lambda0         = 1.0
+lambda_genotype = APOE4:0.2
+opportunity_ages   = 0,   20,  40,  60,  100
+opportunity_values = 0.2, 0.5, 0.9, 1.0, 1.0
+env_baseline    = 1.0
+env_coef        = 0.5
+onset_age       = 30
+onset_env       = -5      # higher deprivation brings metabolic exposure earlier
+nu              = 0.5
+
+[domain:vascular]
+weight_F        = 0.06
+weight_M        = 0.10
+weight_genotype = APOE4:0.15
+tau             = 30
+lambda0         = 1.0
+opportunity_ages   = 0,   40,  70,  100
+opportunity_values = 0.1, 0.8, 1.2, 1.2
+env_baseline    = 1.0
+env_coef        = 0.3
+onset_age       = 40
+nu              = 0.3
+
+[domain:immune]
+weight_F        = 0.07
+weight_M        = 0.05
+tau             = 10
+lambda0         = 1.0
+opportunity_ages   = 0,   45,  55,  100
+opportunity_values = 0.3, 0.5, 1.0, 1.0
+onset_age       = 45      # e.g. a developmentally timed switch such as the menopausal transition
+nu              = 0.4
+
+[domain:deprivation]
+weight_F        = 0.03
+weight_M        = 0.03
+tau             = 40
+lambda0         = 1.0
+opportunity_ages   = 0, 100
+opportunity_values = 1, 1
+env_baseline    = 0.0     # exposure equals E itself
+env_coef        = 1.0
+onset_age       = 0
+
+[domain:physical_activity]
+weight_F        = -0.10   # protective
+weight_M        = -0.10
+tau             = 8
+lambda0         = 1.0
+opportunity_ages          = 0, 45, 65
+opportunity_values        = 0, 1,  0
+opportunity_interpolation = step     # sustained from 45, stopped at 65
+onset_age       = 0
+
+# -----------------------------------------------------------------------------
+# Window of opportunity, Eq. (6): W_i(k) = {u : Delta T_i(k,u) > delta}
+# For each target, the exposure is multiplied by `scale` from start age u onwards.
+# Target may be a domain name or "latent". Use scale > 1 to strengthen a
+# protective domain. Give one scale for all targets or one per target.
+# -----------------------------------------------------------------------------
+[window]
+targets    = metabolic, vascular, immune, latent
+scale      = 0.5
+delta      = 2           # clinically meaningful shift in T_i (years)
+start_min  = 20
+start_max  = 85
+start_step = 1
