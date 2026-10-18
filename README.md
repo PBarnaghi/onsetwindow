@@ -2,7 +2,9 @@
 
 **Transition Age and Windows of Opportunity under an Accumulating Burden Model of Alzheimer's Disease**
 
-![logo](logos/social-preview.png){ width: 200px; }
+<p align="center">
+  <img src="logos/social-preview.png" alt="logo" width="50%">
+</p>
 
 Individual burden trajectories under the accumulating, whole-body burden model of Alzheimer's disease described in the Perspective *"Risk with a clock: reconsidering Alzheimer's disease as an accumulating, whole-body process"* (Barnaghi, Fogel, Biggart, Pownall, Ricotti and Voit).
 
