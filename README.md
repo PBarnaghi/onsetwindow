@@ -2,7 +2,7 @@
 
 **Transition Age and Windows of Opportunity under an Accumulating Burden Model of Alzheimer's Disease**
 
-<p align="centre">
+<p align="center">
   <img src="logos/social-preview.png" alt="logo" width="60%">
 </p>
 
