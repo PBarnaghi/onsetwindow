@@ -8,7 +8,7 @@ Individual burden trajectories under the accumulating, whole-body burden model o
 
 Given one person's sex, genotype, reserve, environment and exposure histories, `onsetwindow` computes the accumulated burden $S_i(t)$, the probability of clinical manifestation at each age, the transition age $T_i$, the constitutive share $\rho_i$, and the window of opportunity $W_i(k)$ for an intervention on each domain. Every input is read from a single `.param` file.
 
-> **Research prototype.** The example parameters are synthetic and describe no real person. Outputs are not a clinical risk estimate until the coefficients are estimated from data.
+> **Research prototype.** The example parameters are synthetic and describe no real person. The framework and its implementation are research hypotheses intended to generate testable predictions; it has not been validated in patients, and no output should be used to inform diagnosis, prognosis or treatment.
 
 ## Install
 
