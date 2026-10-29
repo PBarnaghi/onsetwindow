@@ -1,0 +1,31 @@
+# Participant data and private parameter files: never commit
+data/
+*.private.param
+
+# Model outputs
+results/
+out/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.eggs/
+
+# Environments
+.venv/
+venv/
+env/
+
+# Test and tooling caches
+.pytest_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# OS and editor files
+.DS_Store
+.idea/
+.vscode/
